@@ -252,24 +252,24 @@ const storyEvents = [
       age: 40,
       messages: [
         "Na primeira temporada ao lado do seu filho, cada partida se converte em uma celebração familiar: vocês combinam jogadas treinadas e comemoram os gols abraçados, emocionando a torcida.",
-        "Dentro de campo, sua experiência orienta os passos dele: instruções em tempo real, proteções táticas e incentivo para que ele arrisque dribles e finalizações.",
-        "Fora de campo, entrevistas coletivas se tornam histórias de legado e emoção, mostrando ao mundo que futebol é paixão que atravessa gerações."  
+        "Dentro de campo, sua experiência orienta os passos dele: instruções em tempo real, proteções táticas e incentivo para que ele arrisque dribles e finalizações, é uma emoção a parte cada partida ao lado de seu filho.",
+        "Fora de campo, entrevistas coletivas se tornam histórias de legado e emoção, mostrando ao mundo que futebol é paixão que atravessa gerações, é uma emoção a parte cada partida ao lado de seu filho."  
       ]
     },
     {
       age: 41,
       messages: [
         "No segundo ano juntos, o talento do seu filho atrai o interesse do clube dos sonhos dele: você celebra a notícia com lágrimas de alegria e consciência de que chegou a hora de soltá-lo.",
-        "O último jogo com a camisa do time atual é um misto de festa e nostalgia—você se esforça para abrir espaço e criar oportunidades, enquanto cada passe lembra a jornada compartilhada.",
-        "Agora, como torcedor e mentor à distância, você acompanha a nova fase dele, certo de que o legado que semeou florescerá em novos gramados."  
+        "O último jogo com a camisa do time atual de seu filho, é um misto de festa e nostalgia você se esforça para abrir espaço e criar oportunidades, enquanto cada passe lembra a jornada compartilhada.",
+        "Agora, como jogador, pai e mentor à distância, você acompanha a nova fase de seu filho que está a mudar de clube, certo de que o legado que semeou florescerá em novos gramados."  
       ]
     },
     {
       age: 42,
       messages: [
-        "Aos 42, chega a hora de virar a página: você recomenda reiniciar a carreira em outro papel—treinador, diretor esportivo ou modo sandbox—para continuar ativo no universo futebolístico.",
-        "Emocionado, agradece por cada chute, cada taça e cada torcida que aplaudiu seu nome, e convida a próxima geração a escrever novos capítulos dessa história.",
-        "A aposentadoria é apenas um ponto de virada: para quem busca vida imortal no jogo, o modo sandbox do futebol está pronto para receber o herói que sempre foi."  
+        "Aos 42, chega a hora de virar a página, empresas lhe convidam para continuar no meio esportivo. Porem, Se você se sentir imortal, poderá continuar jogando pelo infinito.",
+        "Emocionado, agradece por cada chute, cada taça e cada torcida que aplaudiu seu nome, e convida a próxima geração a escrever novos capítulos dessa história. Porem, Se você se sentir imortal, poderá continuar jogando pelo infinito.",
+        "A aposentadoria é apenas um ponto de virada, Agora é o momento se acompanhar seu filho, e ser um grande torcedor. Porem, Se você se sentir imortal, poderá continuar jogando pelo infinito."  
       ]
     }
   ];
