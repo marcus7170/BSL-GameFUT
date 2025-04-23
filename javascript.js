@@ -78,13 +78,13 @@ function calculateGoalChance(overall) {
     // • 70–90 → sobe de 15% a 25%
     // • 90–100 → sobe de 25% a 35%
     if (overall < 50) {
-      return 0.02 + (overall / 50) * 0.03;        // 0.02→0.05
+      return 0.01 + (overall / 50) * 0.03;        // 0.02→0.05
     } else if (overall < 70) {
-      return 0.05 + ((overall - 50) / 20) * 0.10; // 0.05→0.15
+      return 0.02 + ((overall - 50) / 20) * 0.05; // 0.05→0.15
     } else if (overall < 90) {
-      return 0.15 + ((overall - 70) / 20) * 0.10; // 0.15→0.25
+      return 0.07 + ((overall - 70) / 20) * 0.07; // 0.15→0.25
     } else {
-      return 0.25 + ((overall - 90) / 10) * 0.10; // 0.25→0.35
+      return 0.10 + ((overall - 90) / 10) * 0.10; // 0.25→0.35
     }
   }
   
@@ -97,11 +97,11 @@ function calculateGoalChance(overall) {
     if (overall < 50) {
       return 0.01 + (overall / 50) * 0.02;        // 0.01→0.03
     } else if (overall < 70) {
-      return 0.03 + ((overall - 50) / 20) * 0.05; // 0.03→0.08
+      return 0.02 + ((overall - 50) / 20) * 0.04; // 0.03→0.08
     } else if (overall < 90) {
-      return 0.08 + ((overall - 70) / 20) * 0.07; // 0.08→0.15
+      return 0.06 + ((overall - 70) / 20) * 0.06; // 0.08→0.15
     } else {
-      return 0.15 + ((overall - 90) / 10) * 0.10; // 0.15→0.25
+      return 0.09 + ((overall - 90) / 10) * 0.09; // 0.15→0.25
     }
   }
   
