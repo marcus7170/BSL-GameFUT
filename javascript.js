@@ -128,6 +128,15 @@ function checkChampionshipTitle() {
 
 function updateTrophyCase() {
     const container = document.getElementById('titles-list');
+    const titlesCount = player.titles.filter(t => t.includes("Campeão")).length;
+    const goldenBoots = player.achievements.filter(a => a.includes("Artilheiro")).length;
+    const assistLeads = player.achievements.filter(a => a.includes("Assistências")).length;
+    const mvps = player.achievements.filter(a => a.includes("Melhor Jogador")).length;
+
+    document.getElementById('titles-count').textContent = titlesCount;
+    document.getElementById('top-scorer').textContent = goldenBoots;
+    document.getElementById('top-assists').textContent = assistLeads;
+    document.getElementById('mvp-count').textContent = mvps;
     container.innerHTML = '';
     
     // Combinar títulos e conquistas com ícones diferentes
