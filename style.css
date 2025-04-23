@@ -1,0 +1,378 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #1a1a1a;
+    color: white;
+}
+
+#game-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.dashboard {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+}
+
+.hidden {
+    display: none;
+}
+
+.choice-button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    background-color: #333;
+}
+
+.choice-button:hover {
+    background-color: #404040;
+}
+
+.tooltip {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 5px;
+}
+
+.chart-container {
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 10px;
+    height: 300px;
+}
+
+.reset-button {
+    background-color: #ff4444;
+    position: fixed;
+    top: 650px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.reset-button:hover {
+    background-color: #cc0000;
+}
+
+.league-container {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.standings table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.standings th, .standings td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #444;
+}
+
+.standings th {
+    background-color: #333;
+}
+
+.standings tr:hover {
+    background-color: #373737;
+}
+
+.user-team {
+    background-color: #001cd0 !important;
+    font-weight: bold;
+}
+
+.relegation-zone {
+    background-color: #5d0000;
+}
+
+.promotion-zone {
+    background-color: #005b00;
+}
+
+/* Adicionar estilo para valor de mercado */
+.stat-item:nth-child(5) {
+    grid-column: span 2;
+}
+
+/* Ajustar tabela */
+.standings td:nth-child(2) {
+    text-align: left;
+    padding-left: 15px;
+}
+
+#round {
+    grid-column: span 2;
+}
+
+#season {
+    grid-column: span 2;
+}
+
+
+/* Melhorar alinhamento */
+.stat-item h3 {
+    margin: 0 0 5px 0;
+    font-size: 0.9em;
+}
+
+.stat-item p {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Adicionar estilo para mensagem final */
+#event-text.final-standing {
+    font-size: 1.1em;
+    line-height: 1.5;
+    padding: 15px;
+    background-color: #3a3a3a;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+/* Ajustar botão de nova temporada */
+.choice-button.new-season {
+    background-color: #2196F3;
+    margin-top: 20px;
+}
+
+.choice-button.new-season:hover {
+    background-color: #1976D2;
+}
+
+.chart-container {
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 10px;
+    height: 300px;
+}
+
+/* Melhorar responsividade */
+@media (max-width: 768px) {
+    .stats {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+    .stat-item {
+        min-width: 120px;
+    }
+}
+
+/* Adicionar tooltip para ranges de overall */
+.team-overall {
+    font-size: 0.8em;
+    color: #888;
+    display: block;
+}
+
+/* Na tabela de classificação */
+.standings td:nth-child(2)::after {
+    content: attr(data-overall);
+    font-size: 0.7em;
+    color: #666;
+    display: block;
+}
+
+/* Botões de troca de divisão */
+.league-container button {
+    background-color: #2196F3;
+    padding: 8px 15px;
+}
+
+.league-container button:hover {
+    background-color: #1976D2;
+}
+
+/* Estilo para as novas estatísticas */
+.stat-item p[id="form"],
+.stat-item p[id="morale"] {
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+/* Cores dinâmicas */
+.stat-item p[id="goals"] {
+    color: #4CAF50;
+}
+
+.stat-item p[id="assists"] {
+    color: #2196F3;
+}
+
+/* Ajustar layout */
+.stat-item:nth-child(7),
+.stat-item:nth-child(8) {
+    grid-column: span 1;
+}
+
+@media (max-width: 600px) {
+    .stat-item:nth-child(n+7) {
+        grid-column: span 2;
+    }
+}
+
+.trophy-case {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 20px;
+    width: 250px;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+}
+
+.trophy-case h2 {
+    font-size: 1.2em;
+    margin: 0 0 15px 0;
+    color: #FFD700;
+    text-align: center;
+}
+
+#titles-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.title-item {
+    background-color: #333;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title-item span {
+    color: #FFD700;
+    font-size: 1.2em;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* Estilos específicos para prêmios individuais */
+.title-item span[role="img"][aria-label="artilheiro"] { color: #4CAF50; }
+.title-item span[role="img"][aria-label="assistencias"] { color: #2196F3; }
+.title-item span[role="img"][aria-label="melhor"] { color: #FFC107; }
+
+.title-item span:contains("⚽") { color: #4CAF50; }
+.title-item span:contains("🎯") { color: #2196F3; }
+.title-item span:contains("⭐") { color: #FFD700; }
+.title-item span:contains("🌟") { color: #FFC107; }
+
+@media (max-width: 1200px) {
+    .trophy-case {
+        position: static;
+        width: auto;
+        margin-left: 0;
+        margin-top: 20px;
+    }
+}
+
+.event-history {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 20px;
+    width: 250px;
+    position: fixed;
+    left: 20px;       /* distância da borda esquerda */
+    right: 300px;
+    top: 20px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+
+.event-history h2 {
+    font-size: 1.2em;
+    margin: 0 0 15px 0;
+    color: #4CAF50;
+    text-align: center;
+}
+
+.event-item {
+    background-color: #333;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9em;
+}
+
+.event-item span {
+    color: #4CAF50;
+}
+
+@media (max-width: 1200px) {
+    .event-history {
+        position: static;
+        width: auto;
+        margin-left: 0;
+        margin-top: 20px;
+    }
+}

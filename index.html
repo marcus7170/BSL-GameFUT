@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Carreira de Jogador</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="game-container">
+        <div class="dashboard">
+            <h1>Minha Carreira de Jogador</h1>
+            <button onclick="location.reload()" class="reset-button">Reiniciar Carreira</button>
+            <div class="stats">
+                <div class="stat-item">
+                    <h3>Idade</h3>
+                    <p id="age">16</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Clube</h3>
+                    <p id="club">BSL Team</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Overall</h3>
+                    <p id="overall">65</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Forma</h3>
+                    <p id="form">75</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Moral</h3>
+                    <p id="morale">80</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Gols</h3>
+                    <p id="goals">0</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Assistências</h3>
+                    <p id="assists">0</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Valor de Mercado</h3>
+                    <p id="marketValue">€ 10.000.000</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Dinheiro em Caixa</h3>
+                    <p id="balance">€ 100.000</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Temporada</h3>
+                    <p id="season">1</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Rodada</h3>
+                    <p id="round">0/38</p>
+                </div>
+            </div>
+            <button onclick="advanceTime()">Avançar Semana (5 rodadas)</button>
+        </div>
+        <div class="trophy-case">
+            <h2>Histórico de Títulos</h2>
+            <div id="titles-list"></div>
+        </div>
+        <div class="event-history">
+            <h2>Histórico de Eventos</h2>
+            <div id="events-list"></div>
+        </div>
+        <div class="league-container">
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <button onclick="switchLeague('A')">Ver Série A</button>
+                <button onclick="switchLeague('B')">Ver Série B</button>
+            </div>
+            <h2 id="league-title">Campeonato Brasileiro Série B</h2>
+            <div class="standings">
+                <table id="league-table">
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th>Time</th>
+                            <th>Pts</th>
+                            <th>J</th>
+                            <th>V</th>
+                            <th>E</th>
+                            <th>D</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-container">
+                <canvas id="overall-chart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="market-value-chart"></canvas>
+            </div>
+        </div>
+
+        <div id="event-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="event-title">Evento</h2>
+                <p id="event-text"></p>
+                <div id="event-choices"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="javascript.js"></script>
+</body>
+</html>
