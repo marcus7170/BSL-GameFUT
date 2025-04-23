@@ -220,7 +220,7 @@ const storyEvents = [
       age: 28,
       messages: [
         "No ápice da carreira, você revisita os sacrifícios: noites em claro revendo partidas, dietas restritivas que forçaram a renunciar prazeres e a famigerada fisioterapia diária para manter o corpo afiado.",
-        "As amizades construídas nos gramados—parceiros de quarto em excursões e confidentes no vestiário—viraram irmãos forjados em conquistas como títulos nacionais e disputas continentais.",
+        "As amizades construídas nos gramados parceiros de quarto em excursões e confidentes no vestiário viraram irmãos forjados em conquistas como títulos nacionais e disputas continentais.",
         "Cada taça erguida e cada placa de ‘jogador do jogo’ confirmam que cada treinamento doloroso valeu a pena, transformando suor em glória e lendas em realidade."  
       ]
     },
@@ -229,7 +229,7 @@ const storyEvents = [
       messages: [
         "Aos 30, o corpo começa a sinalizar: aceleração já não é seu ponto forte, e pequenos incômodos musculares surgem após jogos intensos, exigindo atenção redobrada em recuperação.",
         "Você incorporou técnicas avançadas de regeneração: crioterapia, sessões de pilates e acompanhamento de um preparador físico especializado em atletas experientes.",
-        "Apesar da leve queda na explosão, a visão de jogo e o posicionamento compensam—sua inteligência tática faz você ditar o ritmo da partida e servir passes que só olhos treinados percebem."  
+        "Apesar da leve queda na explosão, a visão de jogo e o posicionamento compensam sua inteligência tática faz você ditar o ritmo da partida e servir passes que só olhos treinados percebem."  
       ]
     },
     {
