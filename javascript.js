@@ -187,6 +187,203 @@ function updateEventHistory() {
     });
 }
 
+
+
+
+// Eventos de História
+const storyEvents = [
+    {
+      age: 18,
+      messages: [
+        "Dois anos de profissionalismo bateram à porta e te levaram para uma rotina intensa: manhãs de treino técnico sob sol escaldante, tardes de musculação e sessões de fisioterapia para superar as primeiras lesões que testaram sua determinação.",
+        "Entre viagens e mudanças de clube, você aprendeu que ser jogador não é apenas talento, mas disciplina: ajustes na dieta, estudo tático de adversários e controle emocional nas entrevistas tornaram-se parte do seu dia a dia.",
+        "A convivência com veteranos ensinou que resiliência faz diferença: cada momento de crise no vestiário virou lição, forjando um caráter pronto para os altos e baixos da carreira."  
+      ]
+    },
+    {
+      age: 21,
+      messages: [
+        "O casamento trouxe uma nova dimensão à sua vida: além de esquemas táticos, agora você equilibra planejamento financeiro familiar, divisão de tarefas em casa e a responsabilidade de ser exemplo para quem ama.",
+        "Os treinos ganharam um propósito extra: nos momentos de dificuldades em campo, a força do vínculo conjugal surgiu como abrigo, lembrando que vitória também se constrói com apoio emocional.",
+        "As primeiras manhãs acordando ao lado do cônjuge antes de partir para os aeroportos reforçaram que, fora do gramado, o amor é seu combustível mais poderoso."  
+      ]
+    },
+    {
+      age: 23,
+      messages: [
+        "Determinado a alcançar o auge, você traçou um plano de cinco anos: aprimorar finalização com treinos específicos três vezes por semana, contratar um mentor de mindset esportivo e contratar um nutricionista para otimizar a performance.",
+        "Sessões de vídeo-analise viraram rotina: estudar posicionamento de atacantes de elite, entender as fraquezas das defesas rivais e adaptar seu estilo para se tornar imprevisível.",
+        "A cada amistoso de pré-temporada, a confiança crescia: gols de cobertura e assistências milimétricas mostraram que a escalada rumo ao topo está bem viva em cada gota de suor."  
+      ]
+    },
+    {
+      age: 28,
+      messages: [
+        "No ápice da carreira, você revisita os sacrifícios: noites em claro revendo partidas, dietas restritivas que forçaram a renunciar prazeres e a famigerada fisioterapia diária para manter o corpo afiado.",
+        "As amizades construídas nos gramados—parceiros de quarto em excursões e confidentes no vestiário—viraram irmãos forjados em conquistas como títulos nacionais e disputas continentais.",
+        "Cada taça erguida e cada placa de ‘jogador do jogo’ confirmam que cada treinamento doloroso valeu a pena, transformando suor em glória e lendas em realidade."  
+      ]
+    },
+    {
+      age: 30,
+      messages: [
+        "Aos 30, o corpo começa a sinalizar: aceleração já não é seu ponto forte, e pequenos incômodos musculares surgem após jogos intensos, exigindo atenção redobrada em recuperação.",
+        "Você incorporou técnicas avançadas de regeneração: crioterapia, sessões de pilates e acompanhamento de um preparador físico especializado em atletas experientes.",
+        "Apesar da leve queda na explosão, a visão de jogo e o posicionamento compensam—sua inteligência tática faz você ditar o ritmo da partida e servir passes que só olhos treinados percebem."  
+      ]
+    },
+    {
+      age: 33,
+      messages: [
+        "A transição para centroavante fixo exigiu redefinir seus atributos: foco em trabalho de força para segurar zagueiros, aprimoramento de jogo aéreo e estudo de rotas de infiltração na área.",
+        "Inspirado pelo CR7, você adotou uma rotina de treinos de finalização de precisão e exercícios de pliometria para manter a potência do salto, buscando cada vez mais gols decisivos.",
+        "O legado passou a ser certeza: não apenas pelos números, mas pela influência que você exerce em jovens atacantes, ensinando que dedicação permanente é o que faz um ídolo durar."  
+      ]
+    },
+    {
+      age: 38,
+      messages: [
+        "Com o filho prestes a completar 15 anos, você se vê não só como atleta, mas como mentor: dedica parte dos treinos a ensinar fundamentos de técnica, disciplina de treino e postura ética.",
+        "As conversas de pai e filho agora incluem análises táticas antes de dormir, enquanto o garoto anota tudo em um caderno para um dia brilhar nos campos.",
+        "Ver sua própria herança no talento e na determinação dele transforma cada lance compartilhado em campo em um momento de profundo orgulho e propósito renovado."  
+      ]
+    },
+    {
+      age: 40,
+      messages: [
+        "Na primeira temporada ao lado do seu filho, cada partida se converte em uma celebração familiar: vocês combinam jogadas treinadas e comemoram os gols abraçados, emocionando a torcida.",
+        "Dentro de campo, sua experiência orienta os passos dele: instruções em tempo real, proteções táticas e incentivo para que ele arrisque dribles e finalizações.",
+        "Fora de campo, entrevistas coletivas se tornam histórias de legado e emoção, mostrando ao mundo que futebol é paixão que atravessa gerações."  
+      ]
+    },
+    {
+      age: 41,
+      messages: [
+        "No segundo ano juntos, o talento do seu filho atrai o interesse do clube dos sonhos dele: você celebra a notícia com lágrimas de alegria e consciência de que chegou a hora de soltá-lo.",
+        "O último jogo com a camisa do time atual é um misto de festa e nostalgia—você se esforça para abrir espaço e criar oportunidades, enquanto cada passe lembra a jornada compartilhada.",
+        "Agora, como torcedor e mentor à distância, você acompanha a nova fase dele, certo de que o legado que semeou florescerá em novos gramados."  
+      ]
+    },
+    {
+      age: 42,
+      messages: [
+        "Aos 42, chega a hora de virar a página: você recomenda reiniciar a carreira em outro papel—treinador, diretor esportivo ou modo sandbox—para continuar ativo no universo futebolístico.",
+        "Emocionado, agradece por cada chute, cada taça e cada torcida que aplaudiu seu nome, e convida a próxima geração a escrever novos capítulos dessa história.",
+        "A aposentadoria é apenas um ponto de virada: para quem busca vida imortal no jogo, o modo sandbox do futebol está pronto para receber o herói que sempre foi."  
+      ]
+    }
+  ];
+  
+
+  function checkStoryEvents() {
+    const currentAge = Math.floor(player.age);
+    const event = storyEvents.find(e => e.age === currentAge && !e.triggered);
+    
+    if(event) {
+      event.triggered = true;
+      const randomMessage = event.messages[Math.floor(Math.random() * event.messages.length)];
+      
+      showStoryEvent({
+        title: `Jornada aos ${currentAge} Anos`,
+        text: randomMessage,
+        icon: getEventIcon(currentAge),
+        age: currentAge // ← Adicione esta linha
+      });
+    }
+  }
+  
+  function getEventIcon(age) {
+    const icons = {
+      18: '🎯',
+      21: '💍',
+      23: '🚀',
+      28: '🏆',
+      30: '⌛',
+      33: '🔄',
+      38: '👨👦',
+      40: '👨👧',
+      41: '👋',
+      42: '🌟'
+    };
+    return icons[age] || '📖';
+  }
+  
+  function showStoryEvent(event) {
+    const modal = document.getElementById('story-modal');
+    const img = document.getElementById('story-image');
+    const titleElement = document.getElementById('story-title');
+    const textElement = document.getElementById('story-text');
+    const choicesElement = document.getElementById('story-choices');
+
+    // Mapeamento de imagens por idade
+    const ageImages = {
+        18: 'img/story/age18.jpg',
+        21: 'img/story/wedding.jpg',
+        23: 'img/story/planning.jpg',
+        28: 'img/story/peak.jpg', 
+        30: 'img/story/decline.jpg',
+        33: 'img/story/transition.jpg',
+        38: 'img/story/mentor.jpg',
+        40: 'img/story/family.jpg',
+        41: 'img/story/family2.jpg',
+        42: 'img/story/retirement.jpg'
+    };
+
+    // Carregar imagem correspondente
+    img.src = ageImages[event.age] || 'img/story/default.jpg';
+    img.alt = `Ilustração para evento aos ${event.age} anos`;
+
+    // Configurar conteúdo
+    titleElement.innerHTML = `
+        <span class="story-icon">${event.icon}</span>
+        ${event.title}
+    `;
+    textElement.textContent = event.text;
+
+    // Configurar botão
+    choicesElement.innerHTML = `
+        <button class="choice-button story-choice" 
+                onclick="document.getElementById('story-modal').classList.add('hidden');
+                         updateDashboard();
+                         updateChart();">
+            ${event.age === 42 ? 'Encerrar Carreira' : 'Continuar Jornada'}
+        </button>
+    `;
+
+    // Exibir modal
+    modal.classList.remove('hidden');
+
+    // Adicionar efeito de áudio opcional
+    if(event.age === 28) new Audio('sound/fanfare.mp3').play();
+    if(event.age === 42) new Audio('sound/end.mp3').play();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const sportsBrands = ['Nike', 'Adidas', 'Puma', 'Under Armour', 'Reebok', 'New Balance'];
 
 
@@ -1299,6 +1496,7 @@ function advanceTime() {
     }
 
     updateDashboard();
+    checkStoryEvents();
     updateChart();
     updateMatchStats();
 
