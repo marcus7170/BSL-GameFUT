@@ -11,7 +11,6 @@
     <div id="game-container">
         <div class="dashboard">
             <h1>Minha Carreira de Jogador</h1>
-            <button onclick="location.reload()" class="reset-button">Reiniciar Carreira</button>
             <div class="stats">
                 <div class="stat-item">
                     <h3>Idade</h3>
@@ -58,7 +57,26 @@
                     <p id="round">0/38</p>
                 </div>
             </div>
-            <button onclick="advanceTime()">Avançar Semana (5 rodadas)</button>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <h3>Títulos</h3>
+                    <p id="titles-count">0</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Artilharias</h3>
+                    <p id="top-scorer">0</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Liderança em Assistências</h3>
+                    <p id="top-assists">0</p>
+                </div>
+                <div class="stat-box">
+                    <h3>MVP de Campeonatos</h3>
+                    <p id="mvp-count">0</p>
+                </div>
+                <button onclick="location.reload()">Reiniciar Carreira</button>
+                <button onclick="advanceTime()">Avançar Semana (5 rodadas)</button>
+            </div>
         </div>
         <div class="trophy-case">
             <h2>Histórico de Títulos</h2>
@@ -68,6 +86,7 @@
             <h2>Histórico de Eventos</h2>
             <div id="events-list"></div>
         </div>
+        <br>
         <div class="league-container">
             <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                 <button onclick="switchLeague('A')">Ver Série A</button>
@@ -92,11 +111,12 @@
                 </table>
             </div>
         </div>
-
+        <br>
         <div class="charts-container">
             <div class="chart-container">
                 <canvas id="overall-chart"></canvas>
             </div>
+            <br>
             <div class="chart-container">
                 <canvas id="market-value-chart"></canvas>
             </div>
