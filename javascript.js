@@ -314,6 +314,7 @@ const storyEvents = [
     const titleElement = document.getElementById('story-title');
     const textElement = document.getElementById('story-text');
     const choicesElement = document.getElementById('story-choices');
+    toggleMusic(false);
 
     // Mapeamento de imagens por idade
     const ageImages = {
@@ -344,6 +345,7 @@ const storyEvents = [
     choicesElement.innerHTML = `
         <button class="choice-button story-choice" 
                 onclick="document.getElementById('story-modal').classList.add('hidden');
+                         toggleMusic(false);
                          updateDashboard();
                          updateChart();">
             ${event.age === 42 ? 'Encerrar Carreira' : 'Continuar Jornada'}
@@ -1654,6 +1656,7 @@ function showEvent(event) {
     const modal = document.getElementById('event-modal');
     document.getElementById('event-title').textContent = event.title;
     document.getElementById('event-text').textContent = event.text;
+
     
     const choices = document.getElementById('event-choices');
     choices.innerHTML = '';
@@ -1663,6 +1666,7 @@ function showEvent(event) {
         button.className = 'choice-button';
         button.innerHTML = `${choice.text}<div class="tooltip">${choice.tooltip}</div>`;
         button.onclick = () => {
+            toggleMusic(false); // Retomar música ao fechar
             choice.action();
             modal.classList.add('hidden');
             updateDashboard();
@@ -1721,6 +1725,38 @@ function getStatusColor(value) {
     if(value >= 80) return '#4CAF50'; // Verde
     if(value >= 60) return '#FFC107'; // Amarelo
     return '#F44336'; // Vermelho
+}
+
+
+const musicFiles = ['music2.mp3', 'music1.mp3'];
+let currentTrack = 0;
+let audioPlayer = document.getElementById('background-music');
+
+// Função para alternar músicas
+function playNextTrack() {
+    currentTrack = (currentTrack + 1) % musicFiles.length;
+    audioPlayer.src = musicFiles[currentTrack];
+    audioPlayer.play();
+}
+
+// Iniciar música quando houver interação do usuário
+document.addEventListener('click', function initAudio() {
+    if (audioPlayer.paused) {
+        audioPlayer.src = musicFiles[currentTrack];
+        audioPlayer.play();
+        audioPlayer.volume = 0.3; // Ajuste o volume
+        audioPlayer.addEventListener('ended', playNextTrack);
+    }
+    document.removeEventListener('click', initAudio);
+});
+
+// Controle de pausa para modais
+function toggleMusic(pause) {
+    if(pause) {
+        audioPlayer.pause();
+    } else {
+        audioPlayer.play();
+    }
 }
 
 
