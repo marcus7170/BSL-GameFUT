@@ -440,6 +440,34 @@ button:hover {
     display: none;
 }
 
+.music-button {
+    position: static;
+    top: 100px;
+    left: 720px;
+    z-index: 1000;
+    background-color: #4CAF50;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 2px solid #fff;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9em;
+}
+
+.music-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+@media (max-width: 768px) {
+    .music-button {
+        top: 5px;
+        left: 5px;
+        padding: 6px 12px;
+        font-size: 0.8em;
+    }
+}
 @media (max-width: 768px) {
     .story-content {
         grid-template-columns: 1fr;
@@ -589,4 +617,58 @@ button:hover {
 
 .event-history {
     order: -1;
+}
+
+.site-footer {
+    background-color: #2a2a2a;
+    padding: 15px 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    border-top: 1px solid #3a3a3a;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-content span {
+    color: #fff;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.calc-icon {
+    width: 30px;
+    height: 30px;
+    filter: invert(100%); /* Transforma preto em branco */
+    transition: transform 0.3s ease;
+}
+
+.calc-icon:hover {
+    transform: rotate(360deg);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        gap: 10px;
+        padding: 0 10px;
+    }
+    
+    .footer-content span {
+        font-size: 0.8em;
+    }
+    
+    .calc-icon {
+        width: 25px;
+        height: 25px;
+    }
 }
