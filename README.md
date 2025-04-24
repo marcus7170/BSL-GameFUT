@@ -1,70 +1,87 @@
-https://marcus7170.github.io/BSL-GameFut/
-# 🎮 Simulador de Carreira de Jogador de Futebol
+# 🎮 Simulador de Carreira de Jogador de Futebol - BSL Edition
 
 <div align="center">
   <img src="https://img.icons8.com/color/96/000000/football.png" alt="Ícone de Futebol"/>
-  <p>Gerencie a carreira de um jogador de futebol virtual! Evolua suas habilidades, conquiste títulos e enfrente eventos imprevisíveis.</p>
+  <p>Gerencie uma carreira futebolística completa! Evolua de jovem promessa a lenda do esporte, com decisões estratégicas e eventos dinâmicos.</p>
+  <a href="https://marcus7170.github.io/BSL-GameFut/"><strong>🎮 Jogar Agora</strong></a>
 </div>
 
 ---
 
 ## 🚀 Recursos Principais
-- **Progressão Dinâmica**: Idade, overall, valor de mercado e estatísticas atualizadas em tempo real.
-- **Sistema de Eventos**: 20+ eventos aleatórios com escolhas impactantes (lesões, patrocínios, convocações e mais!).
-- **Ligas Realistas**: Campeonato Brasileiro Série A e B com promoção/rebaixamento.
-- **Gráficos de Evolução**: Acompanhe seu crescimento através de gráficos interativos.
-- **Conquistas**: Colecione troféus como "Melhor Jogador", "Artilheiro" e até o Prêmio Puskas!
-- **Sistema de Forma/Moral**: Gerencie condição física e psicológica do jogador.
-- **Mercado de Transferências**: Receba ofertas de clubes maiores ao evoluir.
+- **Sistema de Idade Progressiva**: Envelheça de 16 a 42+ anos com eventos únicos em cada fase
+- **40+ Eventos Aleatórios**: Lesões, patrocínios, Puskas, conflitos e reviravoltas dramáticas
+- **Ligas Dinâmicas**: Sistema realista de promoção/rebaixamento entre Série A e B
+- **Gráficos Interativos**: Acompanhe evolução do Overall e Valor de Mercado com Chart.js
+- **Sistema de Conquistas**: 
+  - 🏆 Títulos de Campeonato
+  - ⚽ Artilharias 
+  - 🎯 Liderança em Assistências
+  - ⭐ Prêmios Individuais (MVP/Puskas)
+- **Mecânicas Complexas**:
+  - 💪 Forma Física (treinos/desgaste)
+  - 😤 Moral (eventos/desempenho)
+  - 💰 Mercado com cálculo realista (idade + overall + conquistas)
+- **História Imersiva**: Casamento, paternidade, aposentadoria e legado familiar
 
 ---
 
 ## 🕹️ Como Jogar
-1. **Avançar Semana**: Simule 5 rodadas de cada vez
-2. **Monitorar Estatísticas**:
-   - ⚽ Gols/🎯 Assistências por partida
-   - 📈 Forma (0-100) e Moral (0-100)
-   - 💰 Valor de mercado calculado por desempenho
-3. **Responder Eventos**: Tome decisões críticas quando eventos aleatórios surgirem
-4. **Conquistar Títulos**: Suba da Série B para a Série A e domine o cenário nacional!
+1. **Avançar Rodadas**: Simule 5 partidas por vez (`Avançar Semana`)
+2. **Gerenciar Jogador**:
+   - 📈 Mantenha Forma > 60 para bom desempenho
+   - 😤 Moral alta aumenta chances de gol
+   - ⚠️ Cuidado com lesões e eventos negativos
+3. **Dominar as Ligas**:
+   - 🔼 4 primeiros da Série B sobem
+   - 🔽 4 últimos da Série A caem
+4. **Eventos Críticos**:
+   - 💸 Patrocínios: Escolha entre dinheiro ou bônus
+   - 🤕 Lesões: Trate rápido ou arrisque sequelas
+   - 🌟 Momentos-chave: Convocação para seleção, premiações
 
 ![image](https://github.com/user-attachments/assets/2d80a734-69a9-4e49-820c-eb9f96efa85b)
 
-
-
 ---
 
-## ⚙️ Instalação
+## ⚙️ Instalação Local
 ```bash
-git clone https://github.com/seu-usuario/simulador-carreira-futebol.git
-cd simulador-carreira-futebol
-# Basta abrir index.html no navegador!
+git clone https://github.com/marcus7170/BSL-GameFut.git
+cd BSL-GameFut
+# Abra index.html no navegador (não requer servidor)
 ```
 
 ---
 
-## 🛠 Tecnologias Utilizadas
-- **Chart.js** para visualização de dados
-- HTML5/CSS3 moderno com grid/flexbox
-- JavaScript puro (sem frameworks)
-- Design responsivo para mobile
+## 🛠 Arquitetura Técnica
+- **Frontend**: Vanilla JS + Chart.js v3.9
+- **Design**: CSS Grid/Flexbox + Modais Dinâmicos
+- **Performance**: 
+  - 🚀 Otimizado para mobile
+  - 📊 Gráficos com atualização em tempo real
+  - 🔊 Sistema de áudio com 2 trilhas
+- **Dados Persistidos**: Local Storage para progresso
+- **Ícones**: [Icons8](https://icons8.com) + Emojis nativos
 
 ---
 
-## 🤝 Contribuição
-Contribuições são bem-vindas! Siga estes passos:
-1. Faça um fork do projeto
-2. Crie sua branch (`git checkout -b feature/incrivel`)
-3. Commit suas mudanças (`git commit -m 'Adiciona novo evento'`)
-4. Push para a branch (`git push origin feature/incrivel`)
-5. Abra um Pull Request
+## 🤝 Como Contribuir
+1. Reporte bugs ou sugira features nas [Issues](https://github.com/marcus7170/BSL-GameFut/issues)
+2. Faça fork do projeto (`git clone fork`)
+3. Adicione novos recursos:
+   - 🎭 Novos eventos em `events[]`
+   - 🏆 Conquistas exclusivas
+   - 📊 Melhorias na IA das ligas
+4. Submeta seu PR com testes
 
 ---
 
 ## 📄 Licença
-Distribuído sob licença MIT. Veja `LICENSE` para mais informações.
+MIT License - Consulte [LICENSE](https://github.com/marcus7170/BSL-GameFut/blob/main/LICENSE)
 
 ---
 
-Feito com ❤️ por [Marcus Soares] | Contato +55 (13) 991906461
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://github.com/marcus7170)
+<div align="center">
+  Feito com paixão futebolística ⚽ por Marcus Soares<br>
+  Contato 📞 +55 (13) 991906461
+</div>
