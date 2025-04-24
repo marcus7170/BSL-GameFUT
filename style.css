@@ -145,12 +145,10 @@ button:hover {
     background-color: #005b00;
 }
 
-/* Adicionar estilo para valor de mercado */
 .stat-item:nth-child(5) {
     grid-column: span 2;
 }
 
-/* Ajustar tabela */
 .standings td:nth-child(2) {
     text-align: left;
     padding-left: 15px;
@@ -164,8 +162,6 @@ button:hover {
     grid-column: span 2;
 }
 
-
-/* Melhorar alinhamento */
 .stat-item h3 {
     margin: 0 0 5px 0;
     font-size: 0.9em;
@@ -177,7 +173,6 @@ button:hover {
     font-weight: bold;
 }
 
-/* Adicionar estilo para mensagem final */
 #event-text.final-standing {
     font-size: 1.1em;
     line-height: 1.5;
@@ -187,7 +182,6 @@ button:hover {
     margin: 10px 0;
 }
 
-/* Ajustar botão de nova temporada */
 .choice-button.new-season {
     background-color: #2196F3;
     margin-top: 20px;
@@ -204,7 +198,6 @@ button:hover {
     height: 300px;
 }
 
-/* Melhorar responsividade */
 @media (max-width: 768px) {
     .stats {
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -217,14 +210,12 @@ button:hover {
     }
 }
 
-/* Adicionar tooltip para ranges de overall */
 .team-overall {
     font-size: 0.8em;
     color: #888;
     display: block;
 }
 
-/* Na tabela de classificação */
 .standings td:nth-child(2)::after {
     content: attr(data-overall);
     font-size: 0.7em;
@@ -232,7 +223,6 @@ button:hover {
     display: block;
 }
 
-/* Botões de troca de divisão */
 .league-container button {
     background-color: #2196F3;
     padding: 8px 15px;
@@ -242,7 +232,6 @@ button:hover {
     background-color: #1976D2;
 }
 
-/* Estilo para as novas estatísticas */
 .stat-item p[id="form"],
 .stat-item p[id="morale"] {
     font-size: 1.1em;
@@ -251,7 +240,6 @@ button:hover {
     border-radius: 3px;
 }
 
-/* Cores dinâmicas */
 .stat-item p[id="goals"] {
     color: #4CAF50;
 }
@@ -260,7 +248,6 @@ button:hover {
     color: #2196F3;
 }
 
-/* Ajustar layout */
 .stat-item:nth-child(7),
 .stat-item:nth-child(8) {
     grid-column: span 1;
@@ -312,16 +299,6 @@ button:hover {
     text-align: center;
 }
 
-/* Estilos específicos para prêmios individuais */
-.title-item span[role="img"][aria-label="artilheiro"] { color: #4CAF50; }
-.title-item span[role="img"][aria-label="assistencias"] { color: #2196F3; }
-.title-item span[role="img"][aria-label="melhor"] { color: #FFC107; }
-
-.title-item span:contains("⚽") { color: #4CAF50; }
-.title-item span:contains("🎯") { color: #2196F3; }
-.title-item span:contains("⭐") { color: #FFD700; }
-.title-item span:contains("🌟") { color: #FFC107; }
-
 @media (max-width: 1200px) {
     .trophy-case {
         position: static;
@@ -338,13 +315,12 @@ button:hover {
     margin-left: 20px;
     width: 250px;
     position: fixed;
-    left: 20px;       /* distância da borda esquerda */
+    left: 20px;
     right: 300px;
     top: 20px;
     max-height: 80vh;
     overflow-y: auto;
 }
-
 
 .event-history h2 {
     font-size: 1.2em;
@@ -404,8 +380,13 @@ button:hover {
     color: #4CAF50;
 }
 
-#top-scorer { color: #FFD700; }
-#top-assists { color: #2196F3; }
+#top-scorer { 
+    color: #FFD700; 
+}
+
+#top-assists { 
+    color: #2196F3; 
+}
 
 @media (max-width: 600px) {
     .stats-container {
@@ -413,27 +394,7 @@ button:hover {
     }
 }
 
-/* Estilos para eventos de história */
-.story-event .modal-content {
-    background: #1a237e;
-    border: 2px solid #4CAF50;
-  }
-  
-  .story-event h2 {
-    color: #FFD700 !important;
-    font-size: 1.5em !important;
-  }
-  
-  .story-event .choice-button {
-    background-color: #311b92 !important;
-  }
-  
-  .story-event .choice-button:hover {
-    background-color: #4527a0 !important;
-  }
-
-  /* Modal de História */
-  .story-content {
+.story-content {
     display: grid;
     grid-template-columns: 300px 1fr;
     gap: 25px;
@@ -475,7 +436,10 @@ button:hover {
     background: #45a049 !important;
 }
 
-/* Responsividade */
+#background-music {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .story-content {
         grid-template-columns: 1fr;
@@ -485,4 +449,144 @@ button:hover {
     .story-image {
         height: 200px;
     }
+}
+
+/* Mobile Optimization Additions */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    #game-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dashboard, .league-container, .charts-container {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .stat-item {
+        padding: 8px;
+        min-width: unset;
+    }
+
+    .stat-item h3 {
+        font-size: 0.8em;
+    }
+
+    .stat-item p {
+        font-size: 1em;
+    }
+
+    .trophy-case, .event-history {
+        position: relative;
+        width: 100%;
+        margin: 10px 0;
+        left: 0;
+        right: 0;
+        top: 0;
+    }
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .standings table {
+        font-size: 0.8em;
+    }
+
+    .standings th, .standings td {
+        padding: 6px;
+    }
+
+    .league-container button {
+        width: 48%;
+        padding: 8px;
+        font-size: 0.9em;
+    }
+
+    .charts-container {
+        order: 3;
+    }
+
+    .story-content {
+        width: 95%;
+        margin: 10px;
+    }
+
+    .story-image {
+        height: 150px;
+    }
+
+    .story-text {
+        padding: 15px;
+        font-size: 0.9em;
+    }
+
+    button {
+        font-size: 0.9em;
+        padding: 8px 15px;
+        margin: 3px;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-item:nth-child(n+7) {
+        grid-column: span 1;
+    }
+
+    .league-container button {
+        width: 100%;
+        margin: 2px 0;
+    }
+
+    .standings td:nth-child(2)::after {
+        font-size: 0.6em;
+    }
+
+    .title-item, .event-item {
+        font-size: 0.8em;
+        padding: 8px;
+    }
+}
+
+.standings {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.chart-container {
+    min-width: 300px;
+    height: 250px;
+}
+
+.dashboard h1 {
+    font-size: 1.5em;
+    margin: 0 0 15px 0;
+}
+
+.event-history {
+    order: -1;
 }
