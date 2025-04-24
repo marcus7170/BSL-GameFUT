@@ -314,7 +314,6 @@ const storyEvents = [
     const titleElement = document.getElementById('story-title');
     const textElement = document.getElementById('story-text');
     const choicesElement = document.getElementById('story-choices');
-    toggleMusic(false);
 
     // Mapeamento de imagens por idade
     const ageImages = {
@@ -345,7 +344,6 @@ const storyEvents = [
     choicesElement.innerHTML = `
         <button class="choice-button story-choice" 
                 onclick="document.getElementById('story-modal').classList.add('hidden');
-                         toggleMusic(false);
                          updateDashboard();
                          updateChart();">
             ${event.age === 42 ? 'Encerrar Carreira' : 'Continuar Jornada'}
@@ -1666,7 +1664,7 @@ function showEvent(event) {
         button.className = 'choice-button';
         button.innerHTML = `${choice.text}<div class="tooltip">${choice.tooltip}</div>`;
         button.onclick = () => {
-            toggleMusic(false); // Retomar música ao fechar
+
             choice.action();
             modal.classList.add('hidden');
             updateDashboard();
@@ -1728,41 +1726,42 @@ function getStatusColor(value) {
 }
 
 
-const musicFiles = ['music2.mp3', 'music1.mp3'];
+
 let currentTrack = 0;
-let audioPlayer = document.getElementById('background-music');
+const musicTracks = ['music1.mp3', 'music2.mp3'];
+let isMusicPlaying = false;
 
-// Função para alternar músicas
-function playNextTrack() {
-    currentTrack = (currentTrack + 1) % musicFiles.length;
-    audioPlayer.src = musicFiles[currentTrack];
-    audioPlayer.play();
+function toggleTrack() {
+    currentTrack = (currentTrack + 1) % musicTracks.length;
+    const audio = document.getElementById('background-music');
+    audio.volume = 0.15;
+    audio.src = musicTracks[currentTrack];
+    audio.play();
+    updateMusicButton();
+    isMusicPlaying = true;
 }
 
-// Iniciar música quando houver interação do usuário
-document.addEventListener('click', function initAudio() {
-    if (audioPlayer.paused) {
-        audioPlayer.src = musicFiles[currentTrack];
-        audioPlayer.play();
-        audioPlayer.volume = 0.3; // Ajuste o volume
-        audioPlayer.addEventListener('ended', playNextTrack);
-    }
-    document.removeEventListener('click', initAudio);
-});
-
-// Controle de pausa para modais
-function toggleMusic(pause) {
-    if(pause) {
-        audioPlayer.pause();
-    } else {
-        audioPlayer.play();
-    }
+function updateMusicButton() {
+    const btn = document.getElementById('music-toggle');
+    btn.textContent = `🎵${currentTrack + 1}`;
+    btn.style.backgroundColor = currentTrack === 0 ? '#4CAF50' : '#2196F3';
 }
+
+function handleAudioEnd() {
+    currentTrack = (currentTrack + 1) % musicTracks.length;
+    const audio = document.getElementById('background-music');
+    audio.volume = 0.15; 
+    audio.src = musicTracks[currentTrack];
+    audio.play();
+    updateMusicButton();
+}
+
 
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
     checkDomElements();
+    toggleTrack()
     updateTrophyCase();
     initLeague();
     initChart();
