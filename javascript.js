@@ -1727,18 +1727,35 @@ function getStatusColor(value) {
 
 
 
+// Controle de Música
 let currentTrack = 0;
 const musicTracks = ['music1.mp3', 'music2.mp3'];
-let isMusicPlaying = false;
+let audioPlayer = document.getElementById('background-music');
+let isAudioInitialized = false;
+
+function initAudio() {
+    if (!isAudioInitialized) {
+        audioPlayer.volume = 0.15;
+        audioPlayer.src = musicTracks[currentTrack];
+        audioPlayer.play().catch(() => {});
+        audioPlayer.addEventListener('ended', handleAudioEnd);
+        isAudioInitialized = true;
+        updateMusicButton();
+    }
+}
 
 function toggleTrack() {
     currentTrack = (currentTrack + 1) % musicTracks.length;
-    const audio = document.getElementById('background-music');
-    audio.volume = 0.15;
-    audio.src = musicTracks[currentTrack];
-    audio.play();
+    audioPlayer.src = musicTracks[currentTrack];
+    audioPlayer.play();
     updateMusicButton();
-    isMusicPlaying = true;
+}
+
+function handleAudioEnd() {
+    currentTrack = (currentTrack + 1) % musicTracks.length;
+    audioPlayer.src = musicTracks[currentTrack];
+    audioPlayer.play();
+    updateMusicButton();
 }
 
 function updateMusicButton() {
@@ -1746,22 +1763,16 @@ function updateMusicButton() {
     btn.textContent = `🎵${currentTrack + 1}`;
     btn.style.backgroundColor = currentTrack === 0 ? '#4CAF50' : '#2196F3';
 }
-
-function handleAudioEnd() {
-    currentTrack = (currentTrack + 1) % musicTracks.length;
-    const audio = document.getElementById('background-music');
-    audio.volume = 0.15; 
-    audio.src = musicTracks[currentTrack];
-    audio.play();
-    updateMusicButton();
-}
-
-
+document.addEventListener('click', function firstInteraction() {
+    if (!isAudioInitialized) {
+        initAudio();
+    }
+    document.removeEventListener('click', firstInteraction);
+});
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
     checkDomElements();
-    toggleTrack()
     updateTrophyCase();
     initLeague();
     initChart();
