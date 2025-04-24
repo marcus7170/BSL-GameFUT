@@ -28,7 +28,8 @@ https://marcus7170.github.io/BSL-GameFut/
 3. **Responder Eventos**: Tome decisões críticas quando eventos aleatórios surgirem
 4. **Conquistar Títulos**: Suba da Série B para a Série A e domine o cenário nacional!
 
-![image](https://github.com/user-attachments/assets/9b319657-6f37-4066-ad79-998b13e7d90f)
+![image](https://github.com/user-attachments/assets/2d80a734-69a9-4e49-820c-eb9f96efa85b)
+
 
 
 ---
