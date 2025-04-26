@@ -90,10 +90,17 @@
         <br>
         <div class="league-container">
             <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                <button onclick="switchLeague('A')">Ver Série A</button>
-                <button onclick="switchLeague('B')">Ver Série B</button>
+                <button onclick="switchCountry('Brazil')">Brasil</button>
+                <button onclick="switchCountry('England')">Inglaterra</button>
+                <button onclick="switchCountry('Spain')">Espanha</button>
+                <button onclick="switchCountry('Germany')">Alemanha</button>
+                <button onclick="switchCountry('Italy')">Itália</button>
+                <div id="brazil-buttons" style="display: none;">
+                  <button onclick="switchDivision('A')">Série A</button>
+                  <button onclick="switchDivision('B')">Série B</button>
+                </div>
                 <button id="music-toggle" onclick="toggleTrack()" class="music-button">🎵1</button>
-            </div>
+              </div>
             <h2 id="league-title">Campeonato Brasileiro Série B</h2>
             <div class="standings">
                 <table id="league-table">

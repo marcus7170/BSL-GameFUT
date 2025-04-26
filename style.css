@@ -36,7 +36,7 @@ button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #4CAF50;
+    background-color: #0f6f00;
     color: white;
     cursor: pointer;
     margin: 5px;
@@ -55,7 +55,12 @@ button:hover {
     background-color: rgba(0,0,0,0.7);
     display: flex;
     justify-content: center;
+    transition: opacity 0.3s ease;
     align-items: center;
+}
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .modal-content {
@@ -63,6 +68,10 @@ button:hover {
     padding: 20px;
     border-radius: 10px;
     max-width: 500px;
+    transition: transform 0.3s ease;
+}
+.modal.hidden .modal-content {
+    transform: translateY(-50px);
 }
 
 .hidden {
@@ -410,6 +419,7 @@ button:hover {
     height: 400px;
     object-fit: cover;
     filter: sepia(0.3) brightness(0.9);
+    display: block;
 }
 
 .story-text {
@@ -441,10 +451,7 @@ button:hover {
 }
 
 .music-button {
-    position: static;
-    top: 100px;
-    left: 720px;
-    z-index: 1000;
+
     background-color: #4CAF50;
     padding: 8px 15px;
     border-radius: 20px;
@@ -671,4 +678,30 @@ button:hover {
         width: 25px;
         height: 25px;
     }
+}
+
+.worldcup-stage {
+    padding: 10px;
+    margin: 10px 0;
+    background: #002f6c;
+    border-radius: 5px;
+  }
+  
+  .worldcup-progress {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+  }
+  
+  .worldcup-stat {
+    text-align: center;
+    padding: 10px;
+    background: #001848;
+    border-radius: 5px;
+  }
+
+  .choice-button[disabled] {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
 }
