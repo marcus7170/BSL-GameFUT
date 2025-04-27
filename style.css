@@ -705,7 +705,17 @@ button:hover {
     cursor: not-allowed !important;
     pointer-events: none !important;
 }
-
+.stat-item h4 {
+    font-size: 70%;
+    margin: 0 0 10px 0;
+    color: #ffffff;
+    
+ }
+ .stat-item h5 {
+    font-size: 100%;
+    margin: 0 0 10px 0;
+    color: #FFD700;
+ }
 .country-buttons {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

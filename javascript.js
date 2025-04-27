@@ -16,6 +16,7 @@ let player = {
   titles: [],
   history: [],
   seasonalStats: { goals: 0, assists: 0 },
+  salary: 25000, 
 };
 
 let progressionData = {
@@ -116,30 +117,20 @@ function updateMatchStats() {
 
 function checkChampionshipTitle() {
   const country = league.countries[league.currentCountry];
-  const division = country.divisions[Object.keys(country.divisions)[0]]; // Pega a primeira divisão
+  if (!country) return;
+
+  // encontra em qual divisão o jogador está
+  let actualDivName = Object.keys(country.divisions).find(divName =>
+    country.divisions[divName].teams.some(t => t.name === player.club)
+  );
+  if (!actualDivName) return;
+
+  const division = country.divisions[actualDivName];
   const position = division.standings.findIndex(t => t.name === player.club) + 1;
-  if(position === 1) {
-    const titleName = `${country.name} - Temporada ${country.season}`;
-    if(!player.titles.includes(titleName)) {
-      player.titles.push(titleName);
-      updateTrophyCase();
-    }
-  }
-
-  // Encontrar qual divisão o time do jogador está
-  let actualDivision;
-  Object.entries(country.divisions).forEach(([divName, division]) => {
-    if(division.teams.some(t => t.name === player.club)) {
-      actualDivision = divName;
-    }
-  });
-
-  const currentDivision = country.divisions[actualDivision];
   
-  if (!currentDivision || !currentDivision.standings) return;
-  
+  // só campeão (pos = 1) da divisão onde o jogador atua
   if (position === 1) {
-    const titleName = `Campeão da ${actualDivision} - Temporada ${country.season}`;
+    const titleName = `Campeão da ${actualDivName} - Temporada ${country.season}`;
     if (!player.titles.includes(titleName)) {
       player.titles.push(titleName);
       updateTrophyCase();
@@ -1347,7 +1338,8 @@ function updateDashboard() {
       form: document.getElementById('form'),
       morale: document.getElementById('morale'),
       goals: document.getElementById('goals'),
-      assists: document.getElementById('assists')
+      assists: document.getElementById('assists'),
+      salary: document.getElementById('salary')
   };
 
   for (const [key, element] of Object.entries(elements)) {
@@ -1360,6 +1352,7 @@ function updateDashboard() {
   const season = country ? country.season : 1;
   document.getElementById('season').textContent = season;
   // Atualizar valores
+  elements.salary.textContent = `€ ${player.salary.toLocaleString()}`;
   elements.age.textContent = player.age.toFixed(1);
   elements.club.textContent = player.club;
   elements.overall.textContent = player.overall;
@@ -1537,30 +1530,38 @@ function simulateDivisionRound(teams) {
   });
 }
 
+
 function simulateSingleRound() {
   updateMarketValue();
 
-  // Simular rodada para todas as ligas de todos os países
-  Object.values(league.countries).forEach(country => {
-    Object.values(country.divisions).forEach(division => {
-      if (division.teams.length > 0 && country.round < 38) {
-        simulateDivisionRound(division.teams);
-      }
-    });
-    country.round++;
+  // Determina onde o jogador está
+  const playerCountryKey = Object.keys(league.countries).find(countryKey => {
+    const country = league.countries[countryKey];
+    return Object.values(country.divisions).some(div =>
+      div.teams.some(t => t.name === player.club)
+    );
   });
+  if (playerCountryKey) {
+    const country = league.countries[playerCountryKey];
+    const division = country.divisions[league.currentDivision];
 
-  // Atualizar atributos do jogador
-  Object.values(league.countries).forEach(country => {
-    if (country.round % 5 === 0) {
-      player.form = Math.min(100, player.form + Math.floor(Math.random() * 5));
-      player.morale = Math.min(100, player.morale + Math.floor(Math.random() * 5));
+    if (division && country.round < 38) {
+      simulateDivisionRound(division.teams);
+      country.round++;
     }
-  });
+  }
+
+  // Bônus de forma/moral a cada 5 rodadas da liga do jogador
+  const pc = league.countries[playerCountryKey];
+  if (pc && pc.round % 5 === 0) {
+    player.form = Math.min(100, player.form + Math.floor(Math.random() * 5));
+    player.morale = Math.min(100, player.morale + Math.floor(Math.random() * 5));
+  }
 
   player.age = Number((player.age + (1/38)).toFixed(2));
   updateStandings();
 }
+
 
 function generateRoundMatches(teams) {
   const shuffled = [...teams].sort(() => 0.5 - Math.random());
@@ -1586,34 +1587,45 @@ function switchLeague(division) {
 function updateStandings() {
   const country = league.countries[league.currentCountry];
   if (!country) return;
-
   const division = country.divisions[league.currentDivision];
   if (!division) return;
-  
-  // Atualizar apenas a divisão visível
-  division.standings = [...division.teams].sort((a, b) => 
-    b.pts - a.pts || 
-    (b.wins - a.wins) || 
-    ((b.gf - b.ga) - (a.gf - a.ga))
-  );
 
   const tbody = document.getElementById('table-body');
   tbody.innerHTML = '';
-  
-  division.standings.forEach((team, index) => {
+
+  // verifica se o clube do jogador está nesta divisão
+  const hasPlayer = division.teams.some(t => t.name === player.club);
+  if (!hasPlayer) {
     const row = document.createElement('tr');
-    row.className = team.name === player.club ? 'user-team' : 
-                   index < 4 ? 'promotion-zone' :
-                   index >= division.teams.length - 4 ? 'relegation-zone' : '';
-    
+    const cell = document.createElement('td');
+    cell.colSpan = 7;
+    cell.textContent = 'Não Simulado';
+    cell.style.textAlign = 'center';
+    row.appendChild(cell);
+    tbody.appendChild(row);
+    return;
+  }
+
+  // ordena e exibe normalmente quando for a liga do jogador
+  division.standings = [...division.teams].sort((a, b) =>
+    b.pts - a.pts ||
+    (b.wins - a.wins) ||
+    ((b.gf - b.ga) - (a.gf - a.ga))
+  );
+
+  division.standings.forEach((team, idx) => {
+    const row = document.createElement('tr');
+    row.className = team.name === player.club ? 'user-team' :
+                    idx < 4 ? 'promotion-zone' :
+                    idx >= division.teams.length - 4 ? 'relegation-zone' : '';
     row.innerHTML = `
-        <td>${index + 1}</td>
-        <td data-overall="Overall: ${team.overallRange[0]}-${team.overallRange[1]}">${team.name}</td>
-        <td>${team.pts}</td>
-        <td>${team.played}</td>
-        <td>${team.wins}</td>
-        <td>${team.draws}</td>
-        <td>${team.losses}</td>
+      <td>${idx + 1}</td>
+      <td data-overall="${team.overall || ''}">${team.name}</td>
+      <td>${team.pts}</td>
+      <td>${team.played}</td>
+      <td>${team.wins}</td>
+      <td>${team.draws}</td>
+      <td>${team.losses}</td>
     `;
     tbody.appendChild(row);
   });
@@ -1708,6 +1720,7 @@ function advanceTime() {
     return;
   }
   const roundsToPlay = 5;
+  player.balance += player.salary * roundsToPlay;
   
   for(let i = 0; i < roundsToPlay; i++) {
     simulateSingleRound();
@@ -1759,23 +1772,23 @@ function checkAchievements() {
 }
 
 function endSeason(country) {
-  // Processar apenas SE o país for o atual do jogador
-  if(country.name !== league.countries[league.currentCountry].name) return;
+  // processa só se for a liga onde o jogador está
+  if (country.name !== league.countries[league.currentCountry].name) return;
 
   const divName = Object.keys(country.divisions)[0];
   const division = country.divisions[divName];
-
-  division.standings = [...division.teams].sort((a, b) => 
-      b.pts - a.pts || 
-      (b.wins - a.wins) || 
-      ((b.gf - b.ga) - (a.gf - a.ga))
+  division.standings = [...division.teams].sort((a, b) =>
+    b.pts - a.pts ||
+    (b.wins - a.wins) ||
+    ((b.gf - b.ga) - (a.gf - a.ga))
   );
 
-  // Bônus único para o jogador
+  // bônus de temporada
   const bonus = Math.round((player.form + player.morale) * 1000);
   player.balance += bonus;
   addHistoryEvent(`Bônus de Temporada: €${bonus.toLocaleString()}`);
 
+  // agora só este título
   checkChampionshipTitle();
   checkAchievements();
   player.seasonalStats = { goals: 0, assists: 0 };
@@ -1783,7 +1796,6 @@ function endSeason(country) {
   country.season++;
   country.round = 0;
   initLeague();
-
   setTimeout(() => showTransferEvent(), 1000);
   updateDashboard();
 }
@@ -1865,16 +1877,31 @@ function getBestOffer(teams) {
   )[0];
 }
 
-function acceptTransfer(newClub) {
-  player.club = newClub.name;
-  player.marketValue = Math.round(player.marketValue * 1.3);
-  player.balance += 500000;
-  player.clubs.push(newClub.name);
-  player.morale = Math.min(100, player.morale + 10);
-  addHistoryEvent(`Transferido para ${newClub.name} por €${player.marketValue.toLocaleString()}`);
-  initNewSeason();
-}
-
+  function acceptTransfer(newClub) {
+    // ajusta dados do jogador
+    player.club = newClub.name;
+    player.marketValue = Math.round(player.marketValue * 1.3);
+    player.balance += 500000;
+    player.clubs.push(newClub.name);
+    player.morale = 100;
+    const salaryPct = 0.10 + (Math.random() * 0.05);
+    player.salary = Math.round(player.marketValue * salaryPct / 38);
+    addHistoryEvent(`Transferido para ${newClub.name} por €${player.marketValue.toLocaleString()}`);
+    addHistoryEvent(`Novo salário: €${player.salary.toLocaleString()}/Mes`);
+    // encontra em qual país/divisão o clube está
+    for (const [countryKey, country] of Object.entries(league.countries)) {
+      for (const [divKey, division] of Object.entries(country.divisions)) {
+        if (division.teams.some(t => t.name === newClub.name)) {
+          league.currentCountry = countryKey;
+          league.currentDivision = divKey;
+          break;
+        }
+      }
+    }
+  
+    initNewSeason();    // reinicia temporada na nova liga
+    updateStandings();  // e já atualiza a tabela
+  }
 function refuseTransfer() {
   player.morale = Math.min(100, player.morale + 15);
   player.form += 5;
