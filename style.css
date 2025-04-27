@@ -705,3 +705,61 @@ button:hover {
     cursor: not-allowed !important;
     pointer-events: none !important;
 }
+
+.country-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+  }
+  
+  .country-buttons button {
+    padding: 15px;
+    font-size: 1.1em;
+    background: #2196F3;
+  }
+  
+  #team-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  /* Estilos específicos para o modal de inicialização */
+.init-content {
+    background: #1a1a2e;
+    max-width: 600px;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 2px solid #4CAF50;
+}
+
+.country-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.team-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 1rem 0;
+}
+
+.init-content button {
+    background: #2196F3;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.init-content button:hover {
+    background: #1976D2;
+    transform: scale(1.05);
+}

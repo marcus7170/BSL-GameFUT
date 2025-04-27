@@ -1,12 +1,12 @@
 let player = {
   age: 16,
   overall: 65,
-  club: 'BSL Team',
+  club: '',
   balance: 10000,
   marketValue: 10000000,
   morale: 80,
   form: 75,
-  clubs: ['BSL Team'],
+  clubs: [''],
   achievements: [],
   form: 75,
   morale: 80,
@@ -29,6 +29,7 @@ let progressionData = {
 
 let modalTimeout; 
 let progressChart;
+let firstTimeAdvance = true;
 
 // Calcular o valor de mercado
 function updateMarketValue() {
@@ -115,7 +116,16 @@ function updateMatchStats() {
 
 function checkChampionshipTitle() {
   const country = league.countries[league.currentCountry];
-  
+  const division = country.divisions[Object.keys(country.divisions)[0]]; // Pega a primeira divisão
+  const position = division.standings.findIndex(t => t.name === player.club) + 1;
+  if(position === 1) {
+    const titleName = `${country.name} - Temporada ${country.season}`;
+    if(!player.titles.includes(titleName)) {
+      player.titles.push(titleName);
+      updateTrophyCase();
+    }
+  }
+
   // Encontrar qual divisão o time do jogador está
   let actualDivision;
   Object.entries(country.divisions).forEach(([divName, division]) => {
@@ -127,8 +137,6 @@ function checkChampionshipTitle() {
   const currentDivision = country.divisions[actualDivision];
   
   if (!currentDivision || !currentDivision.standings) return;
-
-  const position = currentDivision.standings.findIndex(t => t.name === player.club) + 1;
   
   if (position === 1) {
     const titleName = `Campeão da ${actualDivision} - Temporada ${country.season}`;
@@ -438,6 +446,10 @@ function showWorldCupMatch(age) {
   const textElement = document.getElementById('story-text');
   const choicesElement = document.getElementById('story-choices');
 
+  // Novo sistema anti-clique rápido
+  if(worldCupStage.blockActions) return;
+  worldCupStage.blockActions = true;
+
   // Simular partida
   const goals = Math.floor(Math.random() * (player.overall/20));
   const result = Math.random() < 0.6 ? 'win' : 'lose';
@@ -445,6 +457,7 @@ function showWorldCupMatch(age) {
   let matchText = `Partida da ${current.text}!`;
   let choicesHTML = '';
 
+  // Botões com proteção contra múltiplos cliques
   if(result === 'win') {
     worldCupStage.wins++;
     worldCupStage.goals += goals;
@@ -454,9 +467,12 @@ function showWorldCupMatch(age) {
     if(current.next) {
       choicesHTML = `
         <button class="choice-button" onclick="
+          this.disabled = true;
+          worldCupStage.currentStage = '${current.next}';
+          worldCupStage.blockActions = false;
           setTimeout(() => {
-            worldCupStage.currentStage = '${current.next}';
             showWorldCupMatch(${age});
+            this.disabled = false;
           }, 1000)">
           Avançar para ${stages[current.next].text}
         </button>
@@ -464,10 +480,12 @@ function showWorldCupMatch(age) {
     } else {
       choicesHTML = `
         <button class="choice-button" onclick="
-            endWorldCup(true, ${age});
-            setTimeout(() => {
-              document.getElementById('story-modal').classList.add('hidden');
-            }, 1000)">
+          this.disabled = true;
+          endWorldCup(true, ${age});
+          setTimeout(() => {
+            document.getElementById('story-modal').classList.add('hidden');
+            this.disabled = false;
+          }, 1000)">
           Campeão da Copa!
         </button>
       `;
@@ -476,26 +494,33 @@ function showWorldCupMatch(age) {
     matchText += `<br>Derrota... Fim da jornada na Copa.`;
     choicesHTML = `
       <button class="choice-button" onclick="
+        this.disabled = true;
         endWorldCup(false, ${age});
         setTimeout(() => {
           document.getElementById('story-modal').classList.add('hidden');
+          this.disabled = false;
         }, 1000)">
         Continuar
       </button>
     `;
   }
 
-  // Atualizar elementos existentes
+  // Atualizar elementos
   img.src = 'img/story/wcup.jpg';
   titleElement.innerHTML = `🏆 Copa do Mundo ${age} Anos`;
   textElement.innerHTML = matchText;
   choicesElement.innerHTML = choicesHTML;
   
   modal.classList.remove('hidden');
+  setTimeout(() => worldCupStage.blockActions = false, 1000);
 }
 
 
 function endWorldCup(champion, age) {
+  // Verificar se já foi processado
+  if(worldCupStage.completed) return;
+  worldCupStage.completed = true;
+
   if(champion) {
     player.overall = Math.min(100, player.overall + 3);
     player.balance += 5000000;
@@ -503,15 +528,26 @@ function endWorldCup(champion, age) {
     addHistoryEvent(`🏆 Campeão da Copa! +3 Overall e €5M`);
   }
   
-  // Bônus por performance
+  // Bônus único
   const bonus = Math.round(worldCupStage.performance * 1000);
   player.balance += bonus;
   addHistoryEvent(`Bônus de Performance: €${bonus.toLocaleString()}`);
   
+  // Resetar estágio
+  setTimeout(() => {
+    worldCupStage = {
+      currentStage: 'group',
+      wins: 0,
+      goals: 0,
+      performance: 0,
+      completed: false,
+      blockActions: false
+    };
+  }, 2000);
+
   updateTrophyCase();
   updateDashboard();
 }
-
 function showStoryEvent(event) {
   const modal = document.getElementById('story-modal');
   const img = document.getElementById('story-image');
@@ -1061,29 +1097,6 @@ let SERIE_A_TEAMS = [
   {name: "América-MG", overallRange: [66, 78]}
 ];
 
-let SERIE_B_TEAMS = [
-  {name: "BSL Team", overallRange: [40, 75]},
-  {name: "Sport", overallRange: [65, 75]},
-  {name: "Guarani", overallRange: [64, 74]},
-  {name: "Criciúma", overallRange: [63, 73]},
-  {name: "Ponte Preta", overallRange: [62, 72]},
-  {name: "Sampaio Corrêa", overallRange: [61, 71]},
-  {name: "CRB", overallRange: [60, 70]},
-  {name: "Operário-PR", overallRange: [59, 69]},
-  {name: "Novorizontino", overallRange: [58, 68]},
-  {name: "Vila Nova", overallRange: [57, 67]},
-  {name: "Ituano", overallRange: [56, 66]},
-  {name: "Chapecoense", overallRange: [55, 65]},
-  {name: "Londrina", overallRange: [54, 64]},
-  {name: "Tombense", overallRange: [53, 63]},
-  {name: "ABC", overallRange: [52, 62]},
-  {name: "Brusque", overallRange: [51, 61]},
-  {name: "Náutico", overallRange: [50, 60]},
-  {name: "Volta Redonda", overallRange: [49, 59]},
-  {name: "Vitória", overallRange: [48, 58]},
-  {name: "CSA", overallRange: [47, 57]}
-];
-
 const PREMIER_LEAGUE = [
 {name: "Manchester City", overallRange: [88, 100]},
 {name: "Liverpool", overallRange: [87, 100]},
@@ -1181,16 +1194,14 @@ const SERIE_A_ITALIA = [
 // Sistema de Liga
 let league = {
   currentCountry: 'Brazil',
-  currentDivision: 'B',
-  currentView: 'B',
+  currentDivision: 'A',
   countries: {
     Brazil: {
       season: 1,
       round: 0,
       name: 'Brasileirão',
       divisions: {
-        A: { teams: SERIE_A_TEAMS, standings: [] },
-        B: { teams: SERIE_B_TEAMS, standings: [] }
+        A: { teams: SERIE_A_TEAMS, standings: [] }
       }
     },
     England: {
@@ -1232,11 +1243,7 @@ function switchCountry(country) {
   league.currentCountry = country;
   const divisions = Object.keys(league.countries[country].divisions);
   league.currentDivision = divisions[0];
-  if (country === 'Brazil') {
-    document.getElementById('brazil-buttons').style.display = 'block';
-  } else {
-    document.getElementById('brazil-buttons').style.display = 'none';
-  }
+  league.currentView = divisions[0]; // Atualiza a visualização atual para a divisão selecionada
   updateStandings();
   updateDashboard();
 }
@@ -1401,22 +1408,35 @@ function getMoraleDescription(value) {
 }
 
 function initLeague() {
-  // Apenas reinicia as estatísticas, mantendo os times atuais
-  Object.values(league.countries).forEach(country => {
-    Object.values(country.divisions).forEach(division => {
-      division.teams.forEach(team => {
-        team.pts = 0;
-        team.played = 0;
-        team.wins = 0;
-        team.draws = 0;
-        team.losses = 0;
-        team.gf = 0;
-        team.ga = 0;
-      });
-      division.standings = [...division.teams];
-    });
+  // Reinicia apenas a divisão principal do país atual
+  const country = league.countries[league.currentCountry];
+  const divName = Object.keys(country.divisions)[0];
+  const division = country.divisions[divName];
+
+  // Resetar estatísticas dos times
+  division.teams.forEach(team => {
+      team.pts = 0;
+      team.played = 0;
+      team.wins = 0;
+      team.draws = 0;
+      team.losses = 0;
+      team.gf = 0;
+      team.ga = 0;
   });
+
+  // Manter mesma composição de times (sem promoção/rebaixamento)
+  division.standings = [...division.teams];
+  
+  // Sistema de desenvolvimento de jogadores
+  if(player.age >= 28) {
+      player.overall = Math.max(40, player.overall - Math.floor((player.age - 27) * 0.5));
+  } else if(player.age <= 23) {
+      player.overall = Math.min(100, player.overall + 2);
+  }
+
+  // Atualizar interface
   updateStandings();
+  updateMarketValue();
 }
 
 
@@ -1599,7 +1619,94 @@ function updateStandings() {
   });
 }
 
+// Função para mostrar a seleção inicial
+function showCountrySelection() {
+  const modal = document.getElementById('init-modal');
+  const body = document.getElementById('init-body');
+  
+  if(!modal || !body) {
+      console.error('Modal de inicialização não encontrado!');
+      return;
+  }
+
+  body.innerHTML = `
+      <p>Escolha seu país e clube inicial:</p>
+      <div class="country-buttons">
+          <button onclick="handleCountrySelect('Brazil')">Brasil</button>
+          <button onclick="handleCountrySelect('England')">Inglaterra</button>
+          <button onclick="handleCountrySelect('Spain')">Espanha</button>
+          <button onclick="handleCountrySelect('Germany')">Alemanha</button>
+          <button onclick="handleCountrySelect('Italy')">Itália</button>
+      </div>
+      <div id="team-selection" class="hidden">
+          <h3>Escolha seu time:</h3>
+          <div class="team-list" id="team-list"></div>
+      </div>
+  `;
+
+  modal.querySelector('#init-title').textContent = '🏁 Início da Carreira';
+  modal.classList.remove('hidden');
+}
+
+function handleCountrySelect(country) {
+  const teamList = document.getElementById('team-list');
+  const teamSelection = document.getElementById('team-selection');
+  
+  if(!teamList || !teamSelection) return;
+
+  // Limpar lista anterior
+  teamList.innerHTML = '';
+  
+  // Obter times do país selecionado
+  const teams = league.countries[country].divisions[Object.keys(league.countries[country].divisions)[0]].teams;
+  
+  // Popular lista de times
+  teams.forEach(team => {
+      const button = document.createElement('button');
+      button.textContent = team.name;
+      button.onclick = () => {
+          player.club = team.name;
+          document.getElementById('init-modal').classList.add('hidden');
+          updateDashboard();
+          advanceTime();
+      };
+      teamList.appendChild(button);
+  });
+  
+  // Mostrar seção de times
+  teamSelection.classList.remove('hidden');
+}
+
+// Função para selecionar país
+function selectCountry(country) {
+  const teams = league.countries[country].divisions[Object.keys(league.countries[country].divisions)[0]].teams;
+  const teamList = document.getElementById('team-list');
+  teamList.innerHTML = '';
+  
+  teams.forEach(team => {
+    const button = document.createElement('button');
+    button.className = 'choice-button';
+    button.innerHTML = team.name;
+    button.onclick = () => {
+      player.club = team.name;
+      document.getElementById('team-selection').style.display = 'none';
+      document.getElementById('story-modal').classList.add('hidden');
+      updateDashboard();
+      advanceTime(); // Continua a simulação
+    };
+    teamList.appendChild(button);
+  });
+  
+  document.getElementById('team-selection').style.display = 'block';
+}
+
+
 function advanceTime() {
+  if(firstTimeAdvance) {
+    showCountrySelection();
+    firstTimeAdvance = false;
+    return;
+  }
   const roundsToPlay = 5;
   
   for(let i = 0; i < roundsToPlay; i++) {
@@ -1652,103 +1759,33 @@ function checkAchievements() {
 }
 
 function endSeason(country) {
-  // Processar todas as divisões do país
-  Object.entries(country.divisions).forEach(([divName, division]) => {
-    // Ordenar classificação
-    division.standings = [...division.teams].sort((a, b) => 
+  // Processar apenas SE o país for o atual do jogador
+  if(country.name !== league.countries[league.currentCountry].name) return;
+
+  const divName = Object.keys(country.divisions)[0];
+  const division = country.divisions[divName];
+
+  division.standings = [...division.teams].sort((a, b) => 
       b.pts - a.pts || 
       (b.wins - a.wins) || 
       ((b.gf - b.ga) - (a.gf - a.ga))
-    );
+  );
 
-    // Sistema específico para o Brasil com duas divisões
-    if(country.name === 'Brasileirão') {
-      if(divName === 'A') {
-        const rebaixadosSerieA = division.standings.slice(-4);
-        const serieB = country.divisions['B'];
-        
-        // Promover apenas 4 times da Série B
-        const promovidosSerieB = serieB.standings.slice(0, 4);
-  
-        // Mantém os times restantes da Série A e adiciona promovidos
-        division.teams = [
-          ...division.teams.slice(0, -4), 
-          ...promovidosSerieB
-        ];
-  
-        // Mantém os times restantes da Série B e adiciona rebaixados
-        serieB.teams = [
-          ...serieB.teams.slice(4),
-          ...rebaixadosSerieA
-        ];
-      }
-    }
-    else {
-      // Sistema genérico para outros países
-      const divisions = Object.keys(country.divisions);
-      const currentIndex = divisions.indexOf(divName);
-      
-      if(currentIndex === 0) {
-        const rebaixados = division.standings.slice(-4);
-        const lowerDivision = country.divisions[divisions[1]];
-        
-        if(lowerDivision) {
-          const promovidos = lowerDivision.standings.slice(0, 4);
-          division.teams = division.teams.filter(t => 
-            !rebaixados.some(r => r.name === t.name)
-          );
-          lowerDivision.teams = [
-            ...rebaixados,
-            ...lowerDivision.teams.filter(t => 
-              !promovidos.some(p => p.name === t.name))
-          ];
-        }
-      }
-      else if(currentIndex > 0) {
-        const upperDivision = country.divisions[divisions[currentIndex - 1]];
-        const lowerDivision = country.divisions[divisions[currentIndex + 1]];
-        
-        const promovidos = division.standings.slice(0, 4);
-        const rebaixados = division.standings.slice(-4);
-        
-        if(upperDivision) {
-          upperDivision.teams = [
-            ...upperDivision.teams,
-            ...promovidos
-          ];
-        }
-        
-        if(lowerDivision) {
-          lowerDivision.teams = [
-            ...rebaixados,
-            ...lowerDivision.teams
-          ];
-        }
-        
-        division.teams = division.teams.filter(t => 
-          !promovidos.some(p => p.name === t.name) &&
-          !rebaixados.some(r => r.name === t.name)
-        );
-      }
-    }
-  });
+  // Bônus único para o jogador
+  const bonus = Math.round((player.form + player.morale) * 1000);
+  player.balance += bonus;
+  addHistoryEvent(`Bônus de Temporada: €${bonus.toLocaleString()}`);
 
-  // Verificar conquistas do jogador
   checkChampionshipTitle();
   checkAchievements();
-  
-  // Resetar estatísticas sazonais
   player.seasonalStats = { goals: 0, assists: 0 };
-  
-  // Reiniciar temporada
+
   country.season++;
   country.round = 0;
   initLeague();
-  
-  // Mostrar evento de transferência
-  setTimeout(() => {
-    showTransferEvent();
-  }, 1000);
+
+  setTimeout(() => showTransferEvent(), 1000);
+  updateDashboard();
 }
 
 function initNewSeason() {
