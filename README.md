@@ -40,7 +40,8 @@
    - 🤕 Lesões: Trate rápido ou arrisque sequelas
    - 🌟 Momentos-chave: Convocação para seleção, premiações
 
-![image](https://github.com/user-attachments/assets/2d80a734-69a9-4e49-820c-eb9f96efa85b)
+![image](https://github.com/user-attachments/assets/95e8a4f5-70d1-487c-96fe-5aee59f6aff1)
+
 
 ---
 
